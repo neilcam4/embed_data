@@ -2,7 +2,8 @@ var express = require('express'),
     app = express(),
     bodyParser = require('body-parser'),
     port = 3000,
-    methodOverride = require('method-override');
+    methodOverride = require('method-override'),
+    Blog = require('./models/blog')
 
 var mongoose = require('mongoose')
 mongoose.connect("mongodb://localhost/embed_data", { useNewUrlParser: true }, function(err, db){
@@ -18,26 +19,8 @@ app.use(methodOverride("_method"))
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended:true}));
 //MONGOOSE MODEL
-var blogSchema = new mongoose.Schema({
-    title:String,
-    image: String,
-    body: String,
-    created: {type:Date, default:Date.now}   
-})
 
-var Blog = mongoose.model("Blog", blogSchema)
 
-// Blog.create({
-//     title: "Test BLog",
-//     image: "https://images.unsplash.com/photo-1579873405514-d26df0b77904?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80",
-//     body: "Hello this is a blog post"
-// }, function(err, blog){
-//     if(err){
-//         console.log(err)
-//     } else {
-//         console.log(blog)
-//     }
-// })
 //RESTFUL ROUTES
 //index route
 app.get('/', function(req,res){
