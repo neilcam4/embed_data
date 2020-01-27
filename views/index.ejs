@@ -7,8 +7,8 @@
         <h2><%=blog.title %></h2>
         <img src = "<%= blog.image %>"></img><br></br>
         <span><%= blog.created %></span><br></br>
-        <p><%= blog.body %></p><br></br>
-        <p>Score: <%= blog.score %></p><br></br>
+        <p><%= blog.body %></p>
+        <p>Score: <%= blog.score %></p>
         <a href="/blogs/<%=blog._id %>">Read More</a><br></br>
     </div>
 <% }) %>

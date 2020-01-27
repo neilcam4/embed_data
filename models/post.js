@@ -1,8 +1,10 @@
 // POST - title, content
 var mongoose = require('mongoose');
+
 var postSchema = new mongoose.Schema({
     title: String,
     content: String
  });
 
-module.exports = mongoose.model("Post", postSchema);
+var Post = mongoose.model("Post", postSchema);
+module.exports = Post;
