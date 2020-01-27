@@ -1,7 +1,8 @@
 var express = require('express'),
     app = express(),
     bodyParser = require('body-parser'),
-    port = 3000;
+    port = 3000,
+    methodOverride = require('method-override');
 
 var mongoose = require('mongoose')
 mongoose.connect("mongodb://localhost/embed_data", { useNewUrlParser: true }, function(err, db){
@@ -11,7 +12,9 @@ mongoose.connect("mongodb://localhost/embed_data", { useNewUrlParser: true }, fu
         console.log("Database is connected")
     }
 });
+mongoose.set('useFindAndModify', false);
 app.set('view engine', 'ejs')
+app.use(methodOverride("_method"))
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended:true}));
 //MONGOOSE MODEL
@@ -81,6 +84,17 @@ app.get('/blogs/:id/edit', function(req,res){
             console.log(err)
         } else {
             res.render("edit", {blog:blog})
+        }
+    })
+})
+
+//update
+app.put('/blogs/:id', function(req,res){
+    Blog.findByIdAndUpdate(req.params.id, req.body.blog, function(err,blog){
+        if(err){
+            res.redirect('/blogs')
+        } else {
+            res.redirect('/blogs/'+req.params.id)
         }
     })
 })
